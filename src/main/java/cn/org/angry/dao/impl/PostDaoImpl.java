@@ -38,16 +38,16 @@ public class PostDaoImpl implements PostDao {
     }
 
     @Override
-    public List<Post> queryPosts(int pageIndex, int count) {
+    public List<Post> queryPosts(int start, int count) {
         String sql = "select * from posts limit ?,?";
-        return DBUtil.getInstance().query(sql, new BeanPropertyRowMapper<>(Post.class),pageIndex,count);
+        return DBUtil.getInstance().query(sql, new BeanPropertyRowMapper<>(Post.class),start,count);
     }
 
     @Override
-    public List<Post> queryPostsByKeyWord(String keyWord, int pageIndex, int count) {
+    public List<Post> queryPostsByKeyWord(String keyWord, int start, int count) {
         keyWord = "%"+keyWord+"%";
         String sql = "select * from posts where title like ? or content like ? limit ?,?";
-        return DBUtil.getInstance().query(sql, new BeanPropertyRowMapper<>(Post.class),keyWord,keyWord,pageIndex,count);
+        return DBUtil.getInstance().query(sql, new BeanPropertyRowMapper<>(Post.class),keyWord,keyWord,start,count);
     }
 
     @Override

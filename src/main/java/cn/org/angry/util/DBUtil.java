@@ -14,7 +14,7 @@ public class DBUtil {
                 if(template==null){
                     Properties properties = new Properties();
                     try {
-                        properties.load(DBUtil.class.getClassLoader().getResourceAsStream("database-config.properties"));
+                        properties.load(DBUtil.class.getClassLoader().getResourceAsStream("database-druid.properties"));
                         template = new JdbcTemplate(DruidDataSourceFactory.createDataSource(properties));
                     } catch (Exception e) {
                         e.printStackTrace();

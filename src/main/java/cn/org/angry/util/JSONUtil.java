@@ -1,10 +1,13 @@
 package cn.org.angry.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * JackJSON工具类
@@ -32,5 +35,15 @@ public class JSONUtil {
         } catch (JsonProcessingException e) {
             return null;
         }
+    }
+
+    public static Map<String, Object> toMap(String content){
+        Map<String, Object> map = new HashMap<>();
+        try {
+            map = objectMapper.readValue(content, new TypeReference<Map<String, Object>>(){});
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return map;
     }
 }

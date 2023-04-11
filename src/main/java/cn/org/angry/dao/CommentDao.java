@@ -34,20 +34,20 @@ public interface CommentDao {
     /**
      * 根据文章id查询文章下的所有评论
      * @param pid 文章id
-     * @param pageSize 页码
-     * @param count 每页评论数量
+     * @param start 起始下标
+     * @param count 查询的评论数量
      * @return 评论集合
      */
-    List<Comment> queryCommentsByPid(int pid, int pageSize, int count);
+    List<Comment> queryCommentsByPid(int pid, int start, int count);
 
     /**
      * 根据用户id查询用户的所有评论
      * @param uid 用户id
-     * @param pageSize 页码
+     * @param start 起始下标
      * @param count 每页评论的数量
      * @return 评论集合
      */
-    List<Comment> queryCommentByUid(int uid, int pageSize, int count);
+    List<Comment> queryCommentByUid(int uid, int start, int count);
 
 
 }

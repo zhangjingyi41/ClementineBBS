@@ -12,20 +12,20 @@ import java.util.List;
 public class SubCommentDaoImpl implements SubCommentDao {
     @Override
     public int addSubComment(SubComment subComment) {
-        String sql = "insert into subComments values (null, ?, ?, ?, ?, ?)";
+        String sql = "insert into subcomments values (null, ?, ?, ?, ?, ?)";
         return DBUtil.getInstance().update(sql,
                 subComment.getContent(),subComment.getCreateTime(),subComment.getUid(),subComment.getCid(),subComment.getScid());
     }
 
     @Override
     public int deleteSubComment(int id) {
-        String sql = "delete from subComments where id=?";
+        String sql = "delete from subcomments where id=?";
         return DBUtil.getInstance().update(sql,id);
     }
 
     @Override
     public int deleteSubCommentByCId(int cid) {
-        String sql = "delete from subComments where cid=?";
+        String sql = "delete from subcomments where cid=?";
         return DBUtil.getInstance().update(sql,cid);
     }
 
@@ -36,14 +36,14 @@ public class SubCommentDaoImpl implements SubCommentDao {
     }
 
     @Override
-    public List<SubComment> querySubCommentsByCId(int cid, int pageIndex, int count) {
-        String sql = "select * from subComments where cid=? limit ?,?";
-        return DBUtil.getInstance().query(sql, new BeanPropertyRowMapper<>(SubComment.class),cid,pageIndex,count);
+    public List<SubComment> querySubCommentsByCId(int cid, int start, int count) {
+        String sql = "select * from subcomments where cid=? limit ?,?";
+        return DBUtil.getInstance().query(sql, new BeanPropertyRowMapper<>(SubComment.class),cid,start,count);
     }
 
     @Override
     public SubComment querySubCommentById(int id) {
-        String sql = "select * from subComments where id=?";
+        String sql = "select * from subcomments where id=?";
         try {
             return DBUtil.getInstance().queryForObject(sql, new BeanPropertyRowMapper<>(SubComment.class),id);
         } catch (DataAccessException e){
@@ -52,8 +52,8 @@ public class SubCommentDaoImpl implements SubCommentDao {
     }
 
     @Override
-    public List<SubComment> querySubCommentsByUId(int uid, int pageIndex, int count) {
-        String sql = "select * from subComments where uid=? limit ?,?";
-        return DBUtil.getInstance().query(sql, new BeanPropertyRowMapper<>(SubComment.class),uid,pageIndex,count);
+    public List<SubComment> querySubCommentsByUId(int uid, int start, int count) {
+        String sql = "select * from subcomments where uid=? limit ?,?";
+        return DBUtil.getInstance().query(sql, new BeanPropertyRowMapper<>(SubComment.class),uid,start,count);
     }
 }

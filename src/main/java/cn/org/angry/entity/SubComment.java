@@ -15,6 +15,7 @@ public class SubComment {
     // 父层评论
     private int cid;
     // 回复的对象id（-1为直属于父层评论，没有回复对象。大于0为回复对象的id，即子评论之间的相互回复）
+    // 或许应该改为targetUid，记录回复的对象用户的id
     private int scid;
 
     // 子评论所属的用户

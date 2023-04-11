@@ -1,5 +1,8 @@
 package cn.org.angry.entity;
 
+/**
+ * 响应结果实体类
+ */
 public class Result {
     private boolean ok;
     private String message;

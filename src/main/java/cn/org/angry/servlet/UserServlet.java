@@ -5,7 +5,9 @@ import cn.org.angry.entity.Result;
 import cn.org.angry.entity.User;
 import cn.org.angry.service.UserService;
 import cn.org.angry.service.impl.UserServiceImpl;
+import cn.org.angry.util.HandleRequestPathUtil;
 import cn.org.angry.util.JSONUtil;
+import cn.org.angry.util.ReadReader;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,15 +27,10 @@ public class UserServlet extends HttpServlet {
     private UserService userService = new UserServiceImpl();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String path = req.getServletPath();
-        String methodName = path.substring(path.lastIndexOf("/")+1);
-        System.out.println(path);
-        System.out.println(methodName);
+        HandleRequestPathUtil requestPathUtil = new HandleRequestPathUtil(this, req, resp);
         try {
-            Method method = getClass().getMethod(methodName, HttpServletRequest.class, HttpServletResponse.class);
-            method.invoke(this, req, resp);
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-//            resp.sendRedirect("404.html");
+            requestPathUtil.execute();
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
         }
     }
@@ -45,40 +42,27 @@ public class UserServlet extends HttpServlet {
     // 登陆
     public void login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         BufferedReader reader = req.getReader();
-        StringBuilder sb = new StringBuilder();
-        int c;
-        // 读取请求数据
-        while ((c = reader.read())!=-1){
-            sb.append((char) c);
-        }
-        User user = JSONUtil.toObject(sb.toString(), User.class);
+        PrintWriter writer = resp.getWriter();
+        User user = JSONUtil.toObject(ReadReader.read(reader), User.class);
         Result result = userService.login(user);
-
         // 用户在线状态暂用session实现
         if(result.isOk()){
             User onlineUser = (User) result.getData();
             req.getSession().setAttribute("onlineUser", onlineUser);
         }
 
-        PrintWriter writer = resp.getWriter();
         // 响应结果
-        writer.print(result);
-
+        writer.print(JSONUtil.toString(result));
         writer.close();
         reader.close();
     }
     // 注册
     public void register(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         BufferedReader reader = req.getReader();
-        StringBuilder sb = new StringBuilder();
-        int c;
-        while ((c = reader.read()) != -1){
-            sb.append((char)c);
-        }
-        User user = JSONUtil.toObject(sb.toString(), User.class);
-        Result result = userService.register(user);
         PrintWriter writer = resp.getWriter();
-        writer.print(result);
+        User user = JSONUtil.toObject(ReadReader.read(reader), User.class);
+        Result result = userService.register(user);
+        writer.print(JSONUtil.toString(result));
         writer.close();
         reader.close();
     }

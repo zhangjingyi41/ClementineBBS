@@ -11,7 +11,7 @@ public class UserDaoImpl implements UserDao
 {
     @Override
     public int addUser(User user) {
-        String sql = "insert into users values(null, ?, ?, ?, ?, null, ?, ?)";
+        String sql = "insert into users (username, password, realname, gender, phone, email) values(?, ?, ?, ?, ?, ?)";
         return DBUtil.getInstance().update(sql,
                 user.getUsername(),user.getPassword(),user.getRealname(),user.getGender(),user.getPhone(),user.getEmail());
     }
@@ -43,6 +43,11 @@ public class UserDaoImpl implements UserDao
     @Override
     public User queryUserByUsername(String username) {
         String sql = "select * from users where username=?";
-        return DBUtil.getInstance().queryForObject(sql, new BeanPropertyRowMapper<>(User.class), username);
+        try {
+            return DBUtil.getInstance().queryForObject(sql, new BeanPropertyRowMapper<>(User.class), username);
+        } catch (DataAccessException e){
+            return null;
+        }
+
     }
 }

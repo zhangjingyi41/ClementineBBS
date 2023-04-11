@@ -2,6 +2,7 @@ package cn.org.angry.service;
 
 
 import cn.org.angry.entity.Post;
+import cn.org.angry.entity.Result;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface PostService {
      * @param count
      * @return
      */
-    List<Post> getPosts(int pageIndex, int count);
+    Result getPosts(int pageIndex, int count);
 
     /**
      * 通过关键词查询
@@ -24,16 +25,16 @@ public interface PostService {
      * @param count
      * @return
      */
-    List<Post> getPostsByKeyWord(String keyWord, int pageIndex, int count);
+    Result getPostsByKeyWord(String keyWord, int pageIndex, int count);
 
     /**
      * 根据id查询文章
      * @param id
      * @return
      */
-    Post getPostById(int id);
+    Result getPostById(int id);
 
-    boolean addPost(Post post);
-    boolean deletePost(int id);
+    Result addPost(Post post);
+    Result deletePost(int id);
 
 }

@@ -35,11 +35,11 @@ public interface SubCommentDao {
     /**
      * 根据父评论id查询子评论
      * @param cid 父评论id
-     * @param pageIndex 页码
+     * @param start 起始下标
      * @param count 每页的数量
      * @return 子评论集合
      */
-    List<SubComment> querySubCommentsByCId(int cid, int pageIndex, int count);
+    List<SubComment> querySubCommentsByCId(int cid, int start, int count);
 
     /**
      * 根据子评论id查询
@@ -51,9 +51,9 @@ public interface SubCommentDao {
     /**
      * 根据用户id查询子评论
      * @param uid 用户id
-     * @param pageIndex 页码
+     * @param start 起始下标
      * @param count 每页的数量
      * @return 子评论集合
      */
-    List<SubComment> querySubCommentsByUId(int uid, int pageIndex, int count);
+    List<SubComment> querySubCommentsByUId(int uid, int start, int count);
 }

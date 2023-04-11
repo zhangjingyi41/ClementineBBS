@@ -6,6 +6,7 @@ import cn.org.angry.dao.UserDao;
 import cn.org.angry.dao.impl.PostDaoImpl;
 import cn.org.angry.dao.impl.UserDaoImpl;
 import cn.org.angry.entity.Post;
+import cn.org.angry.entity.Result;
 import cn.org.angry.service.PostService;
 
 import java.util.List;
@@ -14,38 +15,57 @@ public class PostServiceImpl implements PostService {
     private PostDao postDao = new PostDaoImpl();
     private UserDao userDao = new UserDaoImpl();
     @Override
-    public List<Post> getPosts(int pageIndex, int count) {
-        List<Post> posts = postDao.queryPosts(pageIndex, count);
+    public Result getPosts(int pageIndex, int count) {
+        Result result = new Result();
+        int start = (pageIndex - 1) * count;
+        List<Post> posts = postDao.queryPosts(start, count);
         // 查询每个文章所属的用户信息
         for (Post post : posts) {
             post.setUser(userDao.queryUserById(post.getUid()));
         }
-        return posts;
+        result.setOk(true);
+        result.setData(posts);
+        return result;
     }
 
     @Override
-    public List<Post> getPostsByKeyWord(String keyWord, int pageIndex, int count) {
-        List<Post> posts = postDao.queryPostsByKeyWord(keyWord, pageIndex, count);
+    public Result getPostsByKeyWord(String keyWord, int pageIndex, int count) {
+        Result result = new Result();
+        int start = (pageIndex - 1) * count;
+        List<Post> posts = postDao.queryPostsByKeyWord(keyWord, start, count);
         for (Post post : posts) {
             post.setUser(userDao.queryUserById(post.getUid()));
         }
-        return posts;
+        result.setOk(true);
+        result.setData(posts);
+        return result;
     }
 
     @Override
-    public Post getPostById(int id) {
+    public Result getPostById(int id) {
         Post post = postDao.queryPostById(id);
-        post.setUser(userDao.queryUserById(post.getUid()));
-        return post;
+        Result result = new Result();
+        if(post!=null){
+            post.setUser(userDao.queryUserById(post.getUid()));
+            result.setOk(true);
+        }else {
+            result.setOk(false);
+        }
+        result.setData(post);
+        return result;
     }
 
     @Override
-    public boolean addPost(Post post) {
-        return postDao.addPost(post) > 0;
+    public Result addPost(Post post) {
+        Result result = new Result();
+        result.setOk(postDao.addPost(post) > 0);
+        return result;
     }
 
     @Override
-    public boolean deletePost(int id) {
-        return postDao.deletePost(id) > 0;
+    public Result deletePost(int id) {
+        Result result = new Result();
+        result.setOk(postDao.deletePost(id) > 0);
+        return result;
     }
 }

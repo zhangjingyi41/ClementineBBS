@@ -17,20 +17,20 @@ public class CommentDaoImpl implements CommentDao {
 
     @Override
     public int deleteComment(int cid) {
-        String sql = "delete form comments where id=?";
+        String sql = "delete from comments where id=?";
         return DBUtil.getInstance().update(sql,cid);
     }
 
     @Override
-    public List<Comment> queryCommentsByPid(int pid, int pageSize, int count) {
-        String sql = "select * from comments where pic=? limit ?,?";
-        return DBUtil.getInstance().query(sql, new BeanPropertyRowMapper<>(Comment.class),pid,pageSize,count);
+    public List<Comment> queryCommentsByPid(int pid, int start, int count) {
+        String sql = "select * from comments where pid=? limit ?,?";
+        return DBUtil.getInstance().query(sql, new BeanPropertyRowMapper<>(Comment.class),pid,start,count);
     }
 
     @Override
-    public List<Comment> queryCommentByUid(int uid, int pageSize, int count) {
+    public List<Comment> queryCommentByUid(int uid, int start, int count) {
         String sql = "select * from comments where uid=? limit ?,?";
-        return DBUtil.getInstance().query(sql, new BeanPropertyRowMapper<>(Comment.class),uid,pageSize,count);
+        return DBUtil.getInstance().query(sql, new BeanPropertyRowMapper<>(Comment.class),uid,start,count);
     }
 
     @Override
