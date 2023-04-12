@@ -20,7 +20,14 @@ public class GlobalFilter implements Filter {
         System.out.println("global拦截到了"+request.getServletPath());
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-        if(request.getServletPath().indexOf(".html")>0){
+        // 跨站请求处理
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Access-Control-Allow-Methods", "GET, PUT, POST, OPTIONS, DELETE"); // 接受的方式
+        response.addHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Content-Length");
+        response.addHeader("Access-Control-Max-Age", "86400");
+
+
+        if(request.getServletPath().indexOf(".html")>0 || request.getServletPath().equals("/")){
             response.setContentType("text/html;charset=UTF-8");
             System.out.println("是html，设置text/html;charset=UTF-8");
         }else {

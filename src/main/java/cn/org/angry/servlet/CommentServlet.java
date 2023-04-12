@@ -18,7 +18,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Map;
 
 @WebServlet(urlPatterns = {
@@ -31,6 +30,7 @@ import java.util.Map;
 })
 public class CommentServlet extends HttpServlet {
     private CommentService commentService = new CommentServiceImpl();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);
