@@ -20,7 +20,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 @WebServlet(name = "PostServlet",urlPatterns = {
-        "/post/posts","/post/detail","/post/search",
+        "/post/posts","/post/detail","/post/search","/post/postCount",
         "/post/add",
         "/post/update",
         "/post/delete"
@@ -48,11 +48,11 @@ public class PostServlet extends HttpServlet {
         这里的数据结构应该是：
             {
                 "pageIndex":1,
-                "count":10
+                "pageCount":10
             }
          */
         Map<String, Object> map = JSONUtil.toMap(ReadReader.read(reader));
-        Result result = postService.getPosts((Integer) map.get("pageIndex"), (Integer) map.get("count"));
+        Result result = postService.getPosts((Integer) map.get("pageIndex"), (Integer) map.get("pageDataCount"));
         PrintWriter writer = response.getWriter();
         writer.print(JSONUtil.toString(result));
         writer.close();
@@ -116,7 +116,8 @@ public class PostServlet extends HttpServlet {
             }
          */
         Map<String, Object> map = JSONUtil.toMap(ReadReader.read(reader));
-        Result result = postService.getPostById((Integer) map.get("pid"));
+        System.out.println(map.get("pid"));
+        Result result = postService.getPostById(Integer.valueOf( map.get("pid").toString()));
         writer.print(JSONUtil.toString(result));
         writer.close();
         reader.close();
@@ -134,6 +135,15 @@ public class PostServlet extends HttpServlet {
          */
         Map<String, Object> map = JSONUtil.toMap(ReadReader.read(reader));
         Result result = postService.getPostsByKeyWord(String.valueOf(map.get("keyWord")), (Integer) map.get("pageIndex"), (Integer) map.get("count"));
+        writer.print(JSONUtil.toString(result));
+        writer.close();
+        reader.close();
+    }
+
+    public void postCount(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        BufferedReader reader = request.getReader();
+        PrintWriter writer = response.getWriter();
+        Result result = postService.getPostCount();
         writer.print(JSONUtil.toString(result));
         writer.close();
         reader.close();

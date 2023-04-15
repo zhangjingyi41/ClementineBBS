@@ -59,4 +59,10 @@ public class PostDaoImpl implements PostDao {
             return null;
         }
     }
+
+    @Override
+    public Integer queryPostCount() {
+        String sql = "select count(id) from posts";
+        return DBUtil.getInstance().queryForObject(sql, Integer.class);
+    }
 }

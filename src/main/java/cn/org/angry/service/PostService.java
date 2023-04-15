@@ -13,10 +13,10 @@ public interface PostService {
     /**
      * 根据页码查询
      * @param pageIndex
-     * @param count
+     * @param pageDataCount
      * @return
      */
-    Result getPosts(int pageIndex, int count);
+    Result getPosts(int pageIndex, int pageDataCount);
 
     /**
      * 通过关键词查询
@@ -36,5 +36,7 @@ public interface PostService {
 
     Result addPost(Post post);
     Result deletePost(int id);
+
+    Result getPostCount();
 
 }

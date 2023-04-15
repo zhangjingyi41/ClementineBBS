@@ -9,16 +9,18 @@ import cn.org.angry.entity.Post;
 import cn.org.angry.entity.Result;
 import cn.org.angry.service.PostService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PostServiceImpl implements PostService {
     private PostDao postDao = new PostDaoImpl();
     private UserDao userDao = new UserDaoImpl();
     @Override
-    public Result getPosts(int pageIndex, int count) {
+    public Result getPosts(int pageIndex, int pageDataCount) {
         Result result = new Result();
-        int start = (pageIndex - 1) * count;
-        List<Post> posts = postDao.queryPosts(start, count);
+        int start = (pageIndex - 1) * pageDataCount;
+        List<Post> posts = postDao.queryPosts(start, pageDataCount);
         // 查询每个文章所属的用户信息
         for (Post post : posts) {
             post.setUser(userDao.queryUserById(post.getUid()));
@@ -66,6 +68,16 @@ public class PostServiceImpl implements PostService {
     public Result deletePost(int id) {
         Result result = new Result();
         result.setOk(postDao.deletePost(id) > 0);
+        return result;
+    }
+
+    @Override
+    public Result getPostCount() {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("postCount", postDao.queryPostCount());
+        Result result = new Result();
+        result.setOk(true);
+        result.setData(map);
         return result;
     }
 }

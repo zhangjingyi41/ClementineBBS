@@ -3,50 +3,48 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>首页</title>
+	<link rel="stylesheet" href="/static/css/paper.css">
+	<link rel="stylesheet" href="/static/css/index.css">
+	<script src="/static/js/jquery-3.4.1.js"></script>
+	<script src="/static/js/indexScript.js"></script>
 	<style>
-		*{
-			margin: 0 auto;
-			padding: 0;
-		}
-		table{
-			width: 500px;
-			text-align: center;
+		body{
+			padding-top: 80px;
 		}
 	</style>
-	<script src="/static/js/jquery-3.4.1.js"></script>
-	<script>
-		$(()=>{
-			fetch("http://127.0.0.1:8080/post/posts", {
-				method:'POST',
-				headers:{
-					"Content-Type":"application/json;charset=UTF-8"
-				},
-				body:JSON.stringify({
-					"pageIndex":1,
-    				"count":10
-				})
-			}).then(response=>{
-				return response.json()
-			}).then(data=>{
-				console.log(data)
-			})
-		})
-	</script>
 </head>
 <body>
-	<table>
-		<thead>
-			<tr>
-				<th>作者</th>
-				<th>标题</th>
-				<th>创作日期</th>
-				<th>内容</th>
-				<th>操作</th>
-			</tr>
-		</thead>
-		<tbody>
+	<nav class="border fixed split-nav">
+		<div class="nav-brand">
+		  <h3><a href="http://127.0.0.1:5500/index.html">Clementine</a></h3>
+		</div>
+		<div class="collapsible">
+		  <div class="collapsible-body">
+			<ul class="inline">
+			  <li><input type="text" placeholder="搜帖子" id="paperInputs1"></li>
+			  <li><button class="btn-small">Search</button></li>
+			  <li><a href="#">发帖</a></li>
+			  <li><a href="#">个人中心</a></li>
+			</ul>
+		  </div>
+		</div>
+	</nav>
 
-		</tbody>
-	</table>
+	<div class="container-md">
+		<div class="row flex-center">
+			<div class="col-8" id="post-list">
+				<!-- 文章列表 -->
+			</div>
+		</div>
+		<div class="row flex-center" >
+			<div class="col-8 text-center" id="pagination-box">
+				<!-- 分页按钮 -->
+				<!-- <div class="flex-spaces" >
+
+				</div> -->
+			</div>
+		</div>
+	</div>
+	
 </body>
 </html>

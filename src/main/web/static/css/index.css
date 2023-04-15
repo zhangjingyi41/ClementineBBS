@@ -1,0 +1,23 @@
+.post-title{
+    font-size: 1.5em;
+    font-weight: 600;
+}
+.post-title>a{
+    background-image: none;
+    color: rgb(23, 108, 205);
+}
+.post-body{
+    line-height: 1.7em;
+    max-height: 5.1em;
+    overflow: hidden;
+}
+.user-icon{
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    vertical-align: middle;
+    display: inline-block;
+}
+.user-name{
+    font-weight: 600;
+}

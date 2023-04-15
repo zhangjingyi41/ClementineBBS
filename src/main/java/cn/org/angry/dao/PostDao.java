@@ -34,4 +34,10 @@ public interface PostDao {
      */
     Post queryPostById(int id);
 
+    /**
+     * 获取文章总数量
+     * @return 整数
+     */
+    Integer queryPostCount();
+
 }
